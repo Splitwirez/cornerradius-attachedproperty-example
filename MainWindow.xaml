@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CornerRadiusAttachedPropertyExample;assembly=CornerRadiusAttachedPropertyExample"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CornerRadiusAttachedPropertyExample.MainWindow"
+        Title="CornerRadius AttachedProperty Example">
+    <UniformGrid Columns="1">
+        <Button local:Corners.CornerRadius="10,0,20,30" HorizontalAlignment="Center" VerticalAlignment="Center">weird corners but ok</Button>
+        <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*,*">
+            <Slider x:Name="TopLeftSlider" Minimum="0" Value="20" Maximum="100" Grid.Column="0" Grid.Row="0"/>
+            <Slider x:Name="TopRightSlider" Minimum="0" Value="30" Maximum="100" Grid.Column="2" Grid.Row="0"/>
+            <Slider x:Name="BottomRightSlider" Minimum="0" Value="10" Maximum="100" Grid.Column="2" Grid.Row="2"/>
+            <Slider x:Name="BottomLeftSlider" Minimum="0" Value="0" Maximum="100" Grid.Column="0" Grid.Row="2"/>
+            <Button Content="adjustable corners but ok" Grid.Column="1" Grid.Row="1">
+                <local:Corners.CornerRadius>
+                    <MultiBinding>
+                        <MultiBinding.Converter>
+                            <local:DoublesToCornerRadiusConverter/>
+                        </MultiBinding.Converter>
+                        <MultiBinding.Bindings>
+                            <Binding Path="#TopLeftSlider.Value"/>
+                            <Binding Path="#TopRightSlider.Value"/>
+                            <Binding Path="#BottomRightSlider.Value"/>
+                            <Binding Path="#BottomLeftSlider.Value"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </local:Corners.CornerRadius>
+            </Button>
+        </Grid>
+    </UniformGrid>
+</Window>
